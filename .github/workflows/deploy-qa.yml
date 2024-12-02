@@ -53,6 +53,8 @@ jobs:
             username: ${{ secrets.EC2_USER }}
             key: ${{ secrets.EC2_SSH_KEY }}
             script: |
+                sudo systemclt start docker
+                sudo systemclt enable docker
                 sudo docker stop go_ec2-docker-prod  || echo "No existing process found"
                 sudo docker rm go_ec2-docker-prod  || echo "No existing process found"
                 sudo docker pull mates182/go_ec2-docker-prod:latest
