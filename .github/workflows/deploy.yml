@@ -44,7 +44,7 @@ jobs:
                 cd GO.E2-Docker
                 sudo docker stop go_ec2-docker-prod  || echo "No existing process found"
                 sudo docker rm go_ec2-docker-prod  || echo "No existing process found"
-                sudo docker pull mates182/go_practicetask:latest
+                sudo docker pull mates182/go_ec2-docker-prod:latest
                 sudo docker run -d -p 80:80 --name go_ec2-docker-prod mates182/go_ec2-docker-prod
 
                 
