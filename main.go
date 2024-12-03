@@ -1,10 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"net"
 	"net/http"
 )
+
+type PageData struct {
+	LocalIP string
+}
 
 func getLocalIP() string {
 	addrs, err := net.InterfaceAddrs()
@@ -22,12 +26,16 @@ func getLocalIP() string {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	localIP := getLocalIP()
+	ip := getLocalIP()
 
-	fmt.Fprintf(w, "<h1>Welcome, this page is deployed on Docker</h1>")
-	fmt.Fprintf(w, "<h1>By: Mateo Pillajo :D</h1>")
-	fmt.Fprintf(w, "<h1>Local IP: %s</h1>", localIP)
+	data := PageData{
+		LocalIP: ip,
+	}
+
+	tmpl := template.Must(template.ParseFiles("index.html"))
+	tmpl.Execute(w, data)
 }
+
 func main() {
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":80", nil)
